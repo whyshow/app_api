@@ -30,3 +30,8 @@ go.work.sum
 # Editor/IDE
  .idea/
  .vscode/
+/.idea/.gitignore
+/.idea/app_api.iml
+/.idea/MarsCodeWorkspaceAppSettings.xml
+/.idea/modules.xml
+/.idea/vcs.xml
