@@ -117,6 +117,7 @@ func CreateUser(c *gin.Context) {
 		utils.Error(c, err.Error())
 		return
 	}
+
 	// 返回成功响应
 	utils.Success(c, "注册成功", gin.H{
 		"email":     request.Email,
