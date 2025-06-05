@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"strings"
 	"time"
 )
 
@@ -49,7 +50,17 @@ func Logger() gin.HandlerFunc {
 		}
 
 		if len(bodyBuffer.Bytes()) > 0 {
-			fields = append(fields, zap.ByteString("body", bodyBuffer.Bytes()))
+			// 清洗请求体数据
+			bodyStr := string(bodyBuffer.Bytes())
+			// 替换所有换行符和反斜杠
+			bodyStr = strings.ReplaceAll(bodyStr, "\\", "")   // 处理普通反斜杠
+			bodyStr = strings.ReplaceAll(bodyStr, `\x5c`, "") // 处理URL编码的反斜杠
+			bodyStr = strings.NewReplacer(
+				"\r", "",
+				"\n", "",
+				`\`, "",
+			).Replace(bodyStr)
+			fields = append(fields, zap.String("body", bodyStr))
 		}
 
 		if latency > time.Second {

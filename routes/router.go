@@ -19,6 +19,8 @@ func Routes(r *gin.Engine) {
 	}
 	news := r.Group("/news")
 	{
-		news.POST("/list", controllers.GetNewsList) // 获取新闻列表
+		// 支持GET/POST两种方式获取新闻列表
+		news.GET("/list", controllers.GetNewsList)
+		news.POST("/list", controllers.GetNewsList)
 	}
 }
