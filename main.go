@@ -17,7 +17,13 @@ func main() {
 		panic(err)
 	}
 	// 执行数据库迁移（在此处传入需要迁移的模型）
-	if err := database.UpgradeDatabase([]interface{}{&models.User{}, &models.News{}}); err != nil {
+	if err := database.UpgradeDatabase([]interface{}{
+		&models.User{},
+		&models.News{},
+		&models.DailyRequestStat{},
+		&models.EndpointStat{},
+		&models.IPDetail{},
+	}); err != nil {
 		panic(err)
 	}
 
@@ -28,7 +34,8 @@ func main() {
 	router := gin.New()
 	// 使用全局中间件（按顺序执行）
 	router.Use(
-		middleware.Logger(), // 自定义日志中间件
+		middleware.Logger(),                     // 自定义日志中间件
+		middleware.StatsMiddleware(database.DB), // 新增统计中间件
 	)
 
 	routes.Routes(router)
