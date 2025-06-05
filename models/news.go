@@ -1,6 +1,7 @@
 package models
 
 import (
+	"app_api/config"
 	"app_api/database"
 )
 
@@ -27,6 +28,13 @@ type NewsListRequest struct {
 // GetNewsListData 获取新闻列表数据
 func GetNewsListData(data NewsListRequest) ([]News, error) {
 	var newsList []News
+
+	if data.PageSize > config.Get().Page.MaxPageSize {
+		data.PageSize = config.Get().Page.MaxPageSize
+	} else if data.PageSize < config.Get().Page.MinPageSize {
+		data.PageSize = config.Get().Page.MinPageSize
+	}
+
 	query := database.GetDB().Order("date DESC").Offset((data.Page - 1) * data.PageSize).Limit(data.PageSize)
 	if data.Type != "" {
 		query = query.Where("category = ?", data.Type)

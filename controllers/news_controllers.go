@@ -36,5 +36,6 @@ func GetNewsList(c *gin.Context) {
 
 	utils.Success(c, "成功", gin.H{
 		"result": newsList,
+		"total":  len(newsList),
 	})
 }

@@ -10,19 +10,34 @@ import (
 var C Config
 
 type Config struct {
-	Server    ServerConfig   `yaml:"server"`
-	Database  DatabaseConfig `yaml:"database"`
-	JWTSecret string         `yaml:"jwt_secret"`
+	Server   ServerConfig   `yaml:"server"`
+	Database DatabaseConfig `yaml:"database"`
+	Key      KeyConfig      `yaml:"key"`
+	Page     PageConfig     `yaml:"page"`
 }
 
 type ServerConfig struct {
 	Port string `yaml:"port"`
 }
 
+type PageConfig struct {
+	MinPageSize int `yaml:"min_page_size"  mapstructure:"min_page_size"`
+	MaxPageSize int `yaml:"max_page_size"  mapstructure:"max_page_size"`
+}
+
+type KeyConfig struct {
+	NewsApikey string `yaml:"news_apikey" mapstructure:"news_apikey"`
+	JwtSecret  string `yaml:"jwt_secret"  mapstructure:"jwt_secret"`
+}
+
 type DatabaseConfig struct {
-	DSN          string `yaml:"dsn"`
-	MaxIdleConns int    `yaml:"max_idle_conns"`
-	MaxOpenConns int    `yaml:"max_open_conns"`
+	Host         string `yaml:"host"`
+	DbName       string `yaml:"dbname"`
+	Port         int    `yaml:"port"`
+	User         string `yaml:"user"`
+	Password     string `yaml:"password"`
+	MaxIdleConns int    `yaml:"max_idle_conns" mapstructure:"max_idle_conns"`
+	MaxOpenConns int    `yaml:"max_open_conns" mapstructure:"max_open_conns"`
 }
 
 // Load 加载配置
@@ -42,6 +57,8 @@ func Load() {
 		fmt.Println("检测到配置变更:", e.Name)
 		if err := viper.Unmarshal(&C); err != nil {
 			log.Printf("配置热更新失败: %v", err)
+		} else {
+			fmt.Printf("配置热更新成功: %+v\n", C)
 		}
 	})
 
@@ -49,6 +66,9 @@ func Load() {
 	if err := viper.Unmarshal(&C); err != nil {
 		log.Fatalf("配置解析失败: %v", err)
 	}
+
+	// 打印配置
+	fmt.Printf("配置加载完成: %+v\n", C)
 }
 
 // Get 获取配置实例

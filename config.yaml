@@ -1,8 +1,16 @@
 server:
   port: "8080"
 database:
-  dsn: "ccit:123456@tcp(localhost:3306)/ccit?charset=utf8mb4&parseTime=True&loc=Local"
-  min_connection: 10
-  max_connection: 100
+  host: "localhost"
+  port: 3306
+  user: "ccit"
+  password: "123456"
+  dbname: "ccit"
+  max_idle_conns: 10
+  max_open_conns: 100
 key:
   news_apikey: "7292bbea82b0ad89f513adaa8d4a5d93"
+  jwt_secret: "3JvLhD7MmPkIj5hGMObtRTq+68kwjtRHblLo716Si4o="
+page:
+  min_page_size: 1
+  max_page_size: 20

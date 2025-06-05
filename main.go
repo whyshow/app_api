@@ -28,7 +28,6 @@ func main() {
 	router := gin.New()
 	// 使用全局中间件（按顺序执行）
 	router.Use(
-
 		middleware.Logger(), // 自定义日志中间件
 	)
 

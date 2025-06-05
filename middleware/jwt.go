@@ -18,7 +18,7 @@ func GenerateJWT(uid string) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(config.Get().JWTSecret))
+	return token.SignedString([]byte(config.Get().Key.JwtSecret))
 }
 
 // JWTAuth 鉴权中间件
@@ -31,7 +31,7 @@ func JWTAuth() gin.HandlerFunc {
 		}
 
 		token, err := jwt.Parse(authHeader, func(token *jwt.Token) (interface{}, error) {
-			return []byte(config.Get().JWTSecret), nil
+			return []byte(config.Get().Key.JwtSecret), nil
 		})
 
 		if err != nil || !token.Valid {

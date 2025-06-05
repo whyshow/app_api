@@ -1,6 +1,7 @@
 package services
 
 import (
+	"app_api/config"
 	"app_api/models"
 	"context"
 	"encoding/json"
@@ -110,7 +111,7 @@ func RequestNewsAPIServices() error {
 // fetchAndSaveNews 获取并保存单个类型的新闻数据
 func fetchAndSaveNews(client *http.Client, newsType, typeName string) error {
 	apiUrl := "http://v.juhe.cn/toutiao/index"
-	apiKey := "7292bbea82b0ad89f513adaa8d4a5d93"
+	apiKey := config.Get().Key.NewsApikey
 
 	params := url.Values{}
 	params.Set("key", apiKey)
