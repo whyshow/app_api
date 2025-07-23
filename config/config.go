@@ -40,6 +40,18 @@ type DatabaseConfig struct {
 	MaxOpenConns int    `yaml:"max_open_conns" mapstructure:"max_open_conns"`
 }
 
+// DatabaseInitializer 定义数据库初始化接口
+type DatabaseInitializer interface {
+	Init() error
+}
+
+var dbInitializer DatabaseInitializer
+
+// SetDatabaseInitializer 设置数据库初始化器
+func SetDatabaseInitializer(initializer DatabaseInitializer) {
+	dbInitializer = initializer
+}
+
 // Load 加载配置
 func Load() {
 	viper.SetConfigName("config")
@@ -59,6 +71,13 @@ func Load() {
 			log.Printf("配置热更新失败: %v", err)
 		} else {
 			fmt.Printf("配置热更新成功: %+v\n", C)
+
+			// 通过接口重新初始化数据库
+			if dbInitializer != nil {
+				if err := dbInitializer.Init(); err != nil {
+					log.Printf("数据库重新初始化失败: %v", err)
+				}
+			}
 		}
 	})
 

@@ -11,6 +11,9 @@ import (
 )
 
 func main() {
+	// 设置数据库初始化器
+	config.SetDatabaseInitializer(database.DBInitializer{})
+
 	config.Load()
 	// 初始化数据库
 	if err := database.Init(); err != nil {
@@ -27,6 +30,7 @@ func main() {
 	// 启动定时请求新闻API服务器
 	services.StartNewsScheduler(false)
 
+	gin.SetMode(gin.ReleaseMode)
 	// 创建Gin实例
 	router := gin.New()
 	// 使用全局中间件（按顺序执行）

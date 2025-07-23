@@ -1,16 +1,16 @@
 server:
   port: "8080"  # 服务端口
 database:
-  host: "localhost"
-  port: 3306
-  user: "ccit"
-  password: "123456"
-  dbname: "ccit"
-  max_idle_conns: 10
-  max_open_conns: 100
+  host: "localhost"  # 数据库主机名
+  port: 3306  # 数据库端口
+  user: "ccit"  # 数据库用户名
+  password: "123456"  # 数据库密码
+  dbname: "ccit"  # 数据库名称
+  max_idle_conns: 10  # 最大空闲连接数
+  max_open_conns: 100  # 最大打开连接数
 key:
-  news_apikey: "7292bbea82b0ad89f513adaa8d4a5d93"
-  jwt_secret: "3JvLhD7MmPkIj5hGMObtRTq+68kwjtRHblLo716Si4o="
+  news_apikey: "7292bbea82b0ad89f513adaa8d4a5d93"  # 新闻API密钥
+  jwt_secret: "3JvLhD7MmPkIj5hGMObtRTq+68kwjtRHblLo716Si4o="  # JWT密钥
 page:
-  min_page_size: 1
-  max_page_size: 20
+  min_page_size: 1  # 最小页面大小
+  max_page_size: 20  # 最大页面大小

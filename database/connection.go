@@ -9,6 +9,13 @@ import (
 
 var DB *gorm.DB
 
+// DBInitializer 实现config.DatabaseInitializer接口
+type DBInitializer struct{}
+
+func (d DBInitializer) Init() error {
+	return Init()
+}
+
 // Init 修改后的Init函数
 func Init() error {
 	// 从全局配置获取参数

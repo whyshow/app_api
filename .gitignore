@@ -35,3 +35,5 @@ go.work.sum
 /.idea/MarsCodeWorkspaceAppSettings.xml
 /.idea/modules.xml
 /.idea/vcs.xml
+logs/
+/app_api
