@@ -3,17 +3,18 @@ package middleware
 import (
 	"app_api/config"
 	"app_api/models"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 // GenerateJWT 生成JWT令牌
 func GenerateJWT(uid string) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
-	claims := &jwt.StandardClaims{
+	claims := &jwt.RegisteredClaims{
 		Subject:   uid,
-		ExpiresAt: expirationTime.Unix(),
+		ExpiresAt: jwt.NewNumericDate(expirationTime),
 		Issuer:    "app_api",
 	}
 

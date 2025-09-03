@@ -57,12 +57,10 @@ func Load() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
-
 	// 初始加载配置
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("配置文件加载失败: %v", err)
 	}
-
 	// 配置热更新
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {
@@ -71,7 +69,6 @@ func Load() {
 			log.Printf("配置热更新失败: %v", err)
 		} else {
 			fmt.Printf("配置热更新成功: %+v\n", C)
-
 			// 通过接口重新初始化数据库
 			if dbInitializer != nil {
 				if err := dbInitializer.Init(); err != nil {
@@ -80,12 +77,10 @@ func Load() {
 			}
 		}
 	})
-
 	// 绑定配置到结构体
 	if err := viper.Unmarshal(&C); err != nil {
 		log.Fatalf("配置解析失败: %v", err)
 	}
-
 	// 打印配置
 	fmt.Printf("配置加载完成: %+v\n", C)
 }
