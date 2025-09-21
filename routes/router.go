@@ -3,6 +3,7 @@ package routes
 import (
 	"app_api/controllers"
 	"app_api/middleware"
+
 	"github.com/gin-gonic/gin"
 )
 
